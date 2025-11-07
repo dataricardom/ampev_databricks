@@ -5,11 +5,15 @@ O objetivo deste projeto é aplicar o modelo de **arquitetura medalhão (Medalli
 ---
 
 ## 🥉 Camada Bronze
-Nesta etapa, os dados brutos são **lidos diretamente de um arquivo CSV** armazenado em um bucket **S3** e salvos na camada **bronze** do Databricks.  
+Nesta etapa, os dados brutos são **lidos diretamente de um arquivo CSV** armazenado em um bucket **S3** e salvos na camada **bronze** do Databricks **utilizando PySpark**.  
+
+Os dados são então **convertidos e armazenados no formato Delta**, garantindo melhor desempenho e versionamento no processo de leitura e escrita.
 
 Além da ingestão dos dados originais, foi criada a coluna **`data_carga`**, que registra **a data e hora em que os dados foram carregados** no ambiente — facilitando o controle de versões e auditoria.
 
 > **Objetivo:** armazenar os dados originais sem transformações, mantendo sua integridade e rastreabilidade.
+
+
 
 ---
 
