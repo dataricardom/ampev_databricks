@@ -4,7 +4,7 @@ O objetivo deste projeto é aplicar o modelo de **arquitetura medalhão (Medalli
 
 ---
 
-## 🔹 Camada Bronze
+## 🥉 Camada Bronze
 Nesta etapa, os dados brutos são **lidos diretamente de um arquivo CSV** armazenado em um bucket **S3** e salvos na camada **bronze** do Databricks.  
 
 Além da ingestão dos dados originais, foi criada a coluna **`data_carga`**, que registra **a data e hora em que os dados foram carregados** no ambiente — facilitando o controle de versões e auditoria.
@@ -13,7 +13,7 @@ Além da ingestão dos dados originais, foi criada a coluna **`data_carga`**, qu
 
 ---
 
-## 🔸 Camada Silver
+## 🥈 Camada Silver
 Na camada **silver**, são realizadas **transformações e padronizações**, como:
 - Correção e conversão de tipos de dados das colunas (por exemplo: `string` → `int`, `string` → `decimal`);
 - Padronização de nomes de colunas;
@@ -24,11 +24,11 @@ Na camada **silver**, são realizadas **transformações e padronizações**, co
 
 ---
 
-## 🟡 Camada Gold
+## 🥇 Camada Gold
 A camada **gold** é responsável por gerar **tabelas analíticas e relatórios agregados** a partir dos dados refinados.  
 Nesta etapa, foram desenvolvidas três consultas principais para responder às perguntas de negócio:
 
-### 1️⃣ Quais as 5 empresas que mais compraram produtos?
+### 1 Quais as 5 empresas que mais compraram produtos?
 ```sql
 SELECT es.local AS estabelecimentos,
        SUM(quantidade_vendida) AS compras_realizadas
@@ -38,3 +38,27 @@ JOIN kpuudata.silver.silver_pedidos pe
 GROUP BY 1
 ORDER BY SUM(quantidade_vendida) DESC
 LIMIT 5;
+```
+
+### 2 Quais os 5 produtos mais vendidos?
+```sql
+WITH produtos AS (
+SELECT * FROM kpuudata.silver.silver_pedidos)
+SELECT produto,
+sum(quantidade_vendida) AS qtde_produtos_vendidos
+FROM produtos
+GROUP BY produto
+ORDER BY sum(quantidade_vendida) DESC
+LIMIT 5
+```
+
+### 3 Quais os 5 produtos que mais geraram lucro?
+```sql
+WITH produtos AS (
+SELECT * FROM kpuudata.silver.silver_pedidos)
+SELECT produto,
+sum(total_vendido) AS produtos_maior_faturamento
+FROM produtos
+GROUP BY produto
+ORDER BY sum(total_vendido) DESC
+LIMIT 5
