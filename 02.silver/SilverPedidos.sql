@@ -4,8 +4,10 @@ WITH pedidos AS (
 SELECT 
 CAST(PedidoID AS INT) AS pedido_id,
 CAST(EstabelecimentoID AS INT) AS estabelecimento_id,
+Produto AS produto,
 CAST(quantidade_vendida AS INT) AS quantidade_vendida,
 CAST(Preco_Unitario AS DECIMAL(10,2)) AS preco_unitario,
+CAST(quantidade_vendida AS INT) * CAST(Preco_Unitario AS DECIMAL(10,2)) AS total_vendido,
 TO_DATE(data_venda, "yyyy-MM-dd") AS data_venda,
 current_timestamp() - INTERVAL 3 HOURS AS data_carga
 FROM kpuudata.bronze.pedidos
