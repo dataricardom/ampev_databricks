@@ -1,4 +1,6 @@
-# 🧩 Projeto AMPEV Databricks — Arquitetura Medalhão (Bronze, Silver e Gold)
+# Projeto AMPEV Databricks — Arquitetura Medalhão (Bronze, Silver e Gold)
+
+## Ricardo Marques
 
 O objetivo deste projeto é aplicar o modelo de **arquitetura medalhão (Medallion Architecture)** no Databricks para organizar, transformar e analisar dados de vendas, partindo de dados brutos até insights analíticos.
 
